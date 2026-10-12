@@ -1,1 +1,16 @@
+## Operatoren
+- `=` ist die **Zuweisung**: Der Variable wird ein Wert gegeben.
+- `==` ist der **lose Vergleich**: Prüft den Wert und wandelt bei Bedarf den Typ um (`"5" == 5` → `true`).
+- `===` ist der **strikte Vergleich**: Wert **und** Typ müssen gleich sein (`"5" === 5` → `false`).
 
+## Objekte kopieren
+- `const b = a` erzeugt **keine Kopie**. Beide Namen zeigen auf dasselbe Objekt.
+- `{...a}` ist eine **flache Kopie**: Sie kopiert die Eigenschaften der **ersten Ebene** in ein neues, eigenes Objekt.
+  - Einfache Werte (Zahlen, Strings) werden kopiert.
+  - Verschachtelte Objekte und Arrays werden **nicht kopiert**, nur ihre Referenz. Kopie und Original **teilen** sich diese inneren Objekte, eine Änderung dort wirkt in beiden.
+- `structuredClone(a)` ist eine **tiefe Kopie**: Auch verschachtelte Objekte (Objekte, die als Eigenschaft weitere Objekte haben) werden mitkopiert. Der Klon teilt keine Referenzen mit dem Original.
+  - Grenzen: Der Prototyp geht verloren (Methoden einer Klasse fehlen am Klon), und Funktionen lassen sich nicht klonen (Fehler).
+
+## const bei Objekten
+- `const` verhindert nur, dass der Variable ein **anderes Objekt zugewiesen** wird (die Referenz ist fixiert).
+- Die Eigenschaften des Objekts dürfen weiter geändert werden.
