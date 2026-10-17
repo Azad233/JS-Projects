@@ -1,1 +1,84 @@
+NULL
+Syntax: let x = null;
+- bewusst gesetzter "leer"-Wert
+- falsy
+- typeof null -> "object" (alter Sprachfehler)
+- null.prop wirft TypeError
 
+UNDEFINED
+Syntax: let x;  oder  let x = undefined;
+- "kein Wert gesetzt"
+- kommt automatisch bei: nicht gesetzter Variable, fehlender Eigenschaft, Funktion ohne return
+- falsy
+- undefined.prop wirft TypeError
+- Eigenschaft mit Wert undefined existiert trotzdem
+- null == undefined ist true, null === undefined ist false
+
+OBJECT.HASOWN
+Syntax: Object.hasOwn(obj, "prop")  -> true / false
+- nur eigene Eigenschaften, keine geerbten
+- Object.hasOwn(o, "toString") -> false
+- true auch bei Wert undefined oder null
+
+IN
+Syntax: "prop" in obj  -> true / false
+- eigene + geerbte Eigenschaften
+- "toString" in o -> true
+- links steht der Schlüssel als String
+
+DELETE
+Syntax: delete obj.prop;  oder  delete obj["prop"];
+- Operator, keine Funktion
+- löscht nur eigene Eigenschaften, dauerhaft am Original
+- gibt true zurück, auch wenn nichts da war
+- bei Arrays: delete arr[1] lässt ein Loch, Länge bleibt gleich
+
+PUSH
+Syntax: arr.push(wert);  oder  arr.push(a, b, c);
+- hängt hinten an
+- verändert das Original
+- gibt die neue Länge zurück
+
+UNSHIFT
+Syntax: arr.unshift(wert);
+- fügt vorne ein
+- verändert das Original
+- gibt die neue Länge zurück
+
+SHIFT
+Syntax: const erstes = arr.shift();
+- entfernt das erste Element
+- verändert das Original
+- gibt das entfernte Element zurück (bei leerem Array: undefined)
+
+MERKE: push/pop arbeiten hinten, unshift/shift vorne.
+
+FOR ... OF
+Syntax: for (const element of array) { ... }
+- läuft über die Werte (nicht Indizes)
+- const reicht, weil bei jedem Durchlauf neu angelegt wird
+- Pro Durchlauf: element = nächster Wert
+- Funktioniert bei Arrays und Strings, nicht direkt bei Objekten
+
+DYNAMISCHER ZUGRIFF MIT ECKIGEN KLAMMERN
+Syntax: obj["prop"]  oder  obj[variable]
+- obj.prop: Name steht fest im Code
+- obj[variable]: Inhalt der Variable wird als Schlüssel benutzt
+  const key = "name";
+  obj.key    -> sucht Eigenschaft "key" (meist undefined)
+  obj[key]   -> sucht Eigenschaft "name"
+- Nötig bei Variablen und Schlüsseln mit Sonderzeichen/Leerzeichen: obj["mein feld"]
+- Zuweisung geht genauso: obj[key] = wert;
+
+DYNAMISCHER PFAD DURCH VERSCHACHTELTE OBJEKTE
+Syntax:
+  let aktuell = obj;
+  for (const schluessel of ["a", "b", "c"]) {
+    aktuell = aktuell[schluessel];
+  }
+- Pfad als Array von Schlüsseln
+- jede Runde eine Ebene tiefer: aktuell zeigt auf das Kind
+- Vor jedem Schritt absichern:
+  if (aktuell === null || aktuell === undefined) return false;
+  if (!Object.hasOwn(aktuell, schluessel)) return false;
+- ohne Absicherung: TypeError, sobald aktuell null/undefined ist
